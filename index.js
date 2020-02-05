@@ -1,12 +1,14 @@
 // express instance app
 const app = require('express')();
+// load static file
+const serveStatic = require('serve-static');
 // create http server
 const http = require('http').createServer(app);
 // create socket.io instance
 const io = require('socket.io')(http);
 // server listen port
 const port = process.env.PORT || 4000;
-
+app.use(serveStatic(__dirname + "/dist"));
 
 // listen on connection
 io.on('connection', async (socket) => {

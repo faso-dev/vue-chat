@@ -7,7 +7,7 @@ Vue.use(
         // for development
         debug: false,
         // listen url
-        connection: 'https://localhost:23310',
+        connection: 'http://localhost:23310',
     })
 );
 

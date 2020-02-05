@@ -9,7 +9,10 @@
   },
   "dependencies": {
     "core-js": "^3.4.4",
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.0",
+    "vee-validate": "^3.2.1",
     "vue": "^2.6.10",
     "vue-router": "^3.1.5",
     "vue-socket.io": "^3.0.7",
@@ -23,6 +26,7 @@
     "babel-eslint": "^10.0.3",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "nodemon": "^2.0.2",
     "sass": "^1.19.0",
     "sass-loader": "^8.0.0",
     "vue-cli-plugin-vuetify": "^2.0.3",

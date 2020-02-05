@@ -5,9 +5,9 @@ import VSocket from 'vue-socket.io';
 Vue.use(
     new VSocket({
         // for development
-        debug: true,
+        debug: false,
         // listen url
-        connection: 'http://localhost:4000',
+        connection: 'https://faso-chat.herokuapp.com:23310',
     })
 );
 

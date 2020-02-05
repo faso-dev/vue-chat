@@ -7,7 +7,7 @@ const http = require('http').createServer(app);
 // create socket.io instance
 const io = require('socket.io')(http);
 // server listen port
-const port = process.env.PORT || 23310;
+const port = process.env.PORT || 8080;
 app.use(serveStatic(__dirname + "/dist"));
 
 // listen on connection

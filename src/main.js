@@ -7,7 +7,7 @@ Vue.use(
         // for development
         debug: false,
         // listen url
-        connection: 'https://faso-chat.herokuapp.com:23310',
+        connection: 'https://localhost:23310',
     })
 );
 

@@ -36,7 +36,7 @@
                     </v-card>
                 </template>
             </v-app-bar>
-            <v-container class="mt-50">
+            <v-container :class="{'mt-50' : authAcces}">
                 <v-row v-if="showLoginForm">
                     <v-col cols="12" class="col-lg-12 col-sm-12 col-md-12">
                         <template>
@@ -52,8 +52,10 @@
                                         >
                                             <v-col
                                                     cols="12"
-                                                    sm="8"
-                                                    md="4"
+                                                    sm="12"
+                                                    md="12"
+                                                    sx="12"
+
                                             >
                                                 <v-card class="elevation-12">
                                                     <v-toolbar

@@ -17,7 +17,7 @@
                                 show-arrows
                                 color="primary"
                         >
-                            <v-tabs-slider color="white"/>
+                            <v-tabs-slider color="primary"/>
 
                             <v-tab
                                     v-for="u in onlineUsers"
@@ -445,6 +445,6 @@
         overflow: hidden;
         overflow-y: scroll;
         overflow-style: unset;
-        height: calc(100vh - 200px);
+        height: calc(100vh - 300px);
     }
 </style>

@@ -62,7 +62,8 @@
                                                             flat
                                                     >
                                                         <v-spacer/>
-                                                        <v-toolbar-title class="text-center">Inscrivez vous</v-toolbar-title>
+                                                        <v-toolbar-title class="text-center">Inscrivez vous
+                                                        </v-toolbar-title>
                                                         <v-spacer/>
                                                     </v-toolbar>
                                                     <v-card-text>
@@ -71,7 +72,7 @@
                                                                     @submit.prevent="handleSubmit(register)"
                                                             >
                                                                 <ValidationProvider name="nom d'utilisateur"
-                                                                                    rules="required|min:4|max:15"
+                                                                                    rules="required|min:4|max:15|alpha"
                                                                                     v-slot="{ errors }">
                                                                     <v-text-field
                                                                             placeholder="Votre nom d'utilisateur"
@@ -94,7 +95,9 @@
                                                                 </ValidationProvider>
                                                                 <v-card-actions>
                                                                     <v-spacer/>
-                                                                    <v-btn type="submit" color="primary">Joindre le chat</v-btn>
+                                                                    <v-btn type="submit" color="primary">Joindre le
+                                                                                                         chat
+                                                                    </v-btn>
                                                                 </v-card-actions>
                                                             </v-form>
                                                         </ValidationObserver>
@@ -120,7 +123,8 @@
                             >
                                 <h4>{{ messages.length }} message(s)</h4>
                                 <v-spacer/>
-                                <small v-if="isTyping" class="red--text font-weight-light">{{ isTypingUser }} est entrain d'écrire...</small>
+                                <small v-if="isTyping" class="red--text font-weight-light">{{ isTypingUser }} est
+                                                                                           entrain d'écrire...</small>
                             </v-card-title>
                             <v-content
                                     id="chat-listing-container"
@@ -146,7 +150,8 @@
                                                         />
                                                     </v-list-item-avatar>
                                                     <v-list-item-content>
-                                                        <v-list-item-title>{{ m.user.id !== user.id ? m.user.username : 'Moi' }}
+                                                        <v-list-item-title>{{ m.user.id !== user.id ? m.user.username :
+                                                                           'Moi' }}
                                                         </v-list-item-title>
                                                     </v-list-item-content>
                                                 </v-list-item>
@@ -167,21 +172,28 @@
                     <v-col
                             class="col-lg-12 col-sm-12 col-md-12 v-bottom-navigation--fixed"
                             style="position: relative!important; bottom: 0!important; top: 0!important;">
-                        <v-form
-                                @submit.prevent="send"
-                                fixed
-                        >
-                            <v-textarea
-                                    @keyup.enter="send"
-                                    v-model="newMessage"
-                                    placeholder="Tapez votre message maintenant"
-                                    class="col-lg-12 col-sm-12 col-md-12"
-                                    required
-                                    rounded
-                                    :outlined="true"
-                                    rows="1"
-                            />
-                        </v-form>
+                        <ValidationObserver v-slot="{ handleSubmit }">
+                            <v-form
+                                    @submit.prevent="handleSubmit(send)"
+                                    fixed
+                            >
+                                <ValidationProvider name="messqge"
+                                                    rules="required|min:2|max:100000"
+                                                    v-slot="{ errors }">
+                                    <v-textarea
+                                            @keyup.enter="send"
+                                            v-model="newMessage"
+                                            placeholder="Tapez votre message maintenant"
+                                            class="col-lg-12 col-sm-12 col-md-12"
+                                            required
+                                            rounded
+                                            :outlined="true"
+                                            rows="1"
+                                    />
+                                    <span class="red--text">{{ errors[0] }}</span>
+                                </ValidationProvider>
+                            </v-form>
+                        </ValidationObserver>
                     </v-col>
                 </v-row>
                 <v-snackbar
@@ -209,6 +221,7 @@
 <script>
     import bcrypt from "bcryptjs";
     import iniqid from 'uniqid'
+
     export default {
         name: 'Chat',
         data() {
@@ -260,17 +273,17 @@
                 this.online += 1;
             },
             joinChat(data) {
-                    this.onlineUsers = Object.assign([], this.onlineUsers.filter(user => user.id !== data.user.id));
-                    this.onlineUsers.unshift(data.user);
-                    this.joinUsers.unshift({
-                        color: data.color,
-                        type: data.type,
-                        name: data.user.username,
-                        connectedAt: data.connectedAt
-                    });
-                    setTimeout(() => {
-                        this.joinUsers = [];
-                    }, 5000)
+                this.onlineUsers = Object.assign([], this.onlineUsers.filter(user => user.id !== data.user.id));
+                this.onlineUsers.unshift(data.user);
+                this.joinUsers.unshift({
+                    color: data.color,
+                    type: data.type,
+                    name: data.user.username,
+                    connectedAt: data.connectedAt
+                });
+                setTimeout(() => {
+                    this.joinUsers = [];
+                }, 5000)
             },
             unJoinChat(data) {
                 this.updateOnlineUsersWhenUserDisconnect();
@@ -311,23 +324,23 @@
                     connectedAt: Date.now(),
                     token: bcrypt.hashSync(this.joinUserPassword, 12)
                 });
-                window.localStorage.setItem('user', JSON.stringify({info: this.user, _pass: this.joinUserPassword}));
+                window.localStorage.setItem('_FSDV_USER_', JSON.stringify({info: this.user, _pass: this.joinUserPassword}));
                 this.authAcces = true;
                 this.showLoginForm = false;
                 this.snackbar = true;
                 this.setJoinNotification();
             },
             //Update user message
-            updateUserMessages(){
-                window.localStorage.setItem('_f_messages',JSON.stringify(this.messages))
+            updateUserMessages() {
+                window.localStorage.setItem('_FSDV_SESSION_MESSAGES', JSON.stringify(this.messages))
             },
             //Load user old messages
-            loadUserMessages(){
-                this.messages = Object.assign([], JSON.parse(window.localStorage.getItem('_f_messages')) || [])
+            loadUserMessages() {
+                this.messages = Object.assign([], JSON.parse(window.localStorage.getItem('_FSDV_SESSION_MESSAGES')) || [])
             },
             //When user loging
             async login() {
-                let _token = window.localStorage.getItem('user');
+                let _token = window.localStorage.getItem('_FSDV_USER_');
                 let user = JSON.parse(_token);
                 if (user && user._pass && user.info && user.info.token) {
                     const match = await bcrypt.compare(user._pass, user.info.token);
@@ -336,11 +349,11 @@
                         this.showLoginForm = false;
                         this.snackbar = true;
                         this.user = Object.assign({}, user.info);
-                        let sessionToken = window.localStorage.getItem('_f_session') || null;
+                        let sessionToken = window.localStorage.getItem('_FSDV_SESSION_') || null;
                         this.onlineUsers.unshift(this.user);
                         this.loadUserMessages();
-                        if (!sessionToken){
-                            window.localStorage.setItem('_f_session', iniqid());
+                        if (!sessionToken) {
+                            window.localStorage.setItem('_FSDV_SESSION_', iniqid());
                             this.setJoinNotification();
                             this.onlineUserCountUpdate();
                         }
@@ -357,7 +370,7 @@
                     if (this.user.id) {
                         this.updateOnlineUsersWhenUserDisconnect();
                         this.setUnjoinNotification();
-                        window.localStorage.removeItem('_f_session');
+                        window.localStorage.removeItem('_FSDV_SESSION_');
                     }
                 }
             },
@@ -380,7 +393,7 @@
             },
             //Update online user number
             onlineUserCountUpdate() {
-                this.online +=1;
+                this.online += 1;
                 this.$socket.emit('updateOnlineUsers');
             },
             //Reset the message textarea field
@@ -397,8 +410,8 @@
                     type: 'vient de se connecter'
                 });
             },
-            userExist(){
-                return this.onlineUsers.findIndex( u => u.id === this.user.id);
+            userExist() {
+                return this.onlineUsers.findIndex(u => u.id === this.user.id);
             },
             //Display a notification when a user is disconnected
             setUnjoinNotification() {
@@ -423,9 +436,11 @@
     .box-shadow {
         box-shadow: 5px -2px 10px 10px whitesmoke !important;
     }
-    .mt-50{
-        margin-top: 30px!important;
+
+    .mt-50 {
+        margin-top: 30px !important;
     }
+
     .chat-scroll-view {
         overflow: hidden;
         overflow-y: scroll;

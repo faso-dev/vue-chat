@@ -183,7 +183,7 @@
                                                     rules="min:2|max:100000"
                                                     v-slot="{ errors }">
                                     <v-textarea
-                                            @keyup.enter="send"
+                                            @keyup.enter="handleSubmit(send)"
                                             v-model="newMessage"
                                             placeholder="Tapez votre message maintenant"
                                             class="col-lg-12 col-sm-12 col-md-12"
@@ -269,7 +269,7 @@
                 this.messages.push(data);
                 this.updateUserMessages();
                 let container = this.$el.querySelector("#chat-listing-container");
-                container.scrollTop = container.scrollHeight + 190;
+                container.scrollTop = container.scrollHeight + 120;
             },
             updateOnlineUsers() {
                 this.online += 1;

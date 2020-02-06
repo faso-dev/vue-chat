@@ -128,9 +128,9 @@
                                 <small v-if="isTyping" class="red--text font-weight-light">{{ isTypingUser }} est
                                                                                            entrain d'écrire...</small>
                             </v-card-title>
-                            <v-content
-                                    id="chat-listing-container"
+                            <div
                                     class="chat-scroll-view"
+                                    id="chat-listing-container"
                             >
                                 <v-row
                                         v-for="m in messages"
@@ -161,23 +161,32 @@
                                             <v-card-text>
                                                 {{ m.content }}
                                             </v-card-text>
+                                            <v-card-actions>
+                                                {{ new Date(m.createdAt) | moment("from", "now") }}
+                                            </v-card-actions>
                                         </v-card>
                                     </v-col>
                                 </v-row>
-                            </v-content>
+                            </div>
                         </v-card>
                     </v-col>
                 </v-row>
                 <v-row
+                        class="mt-5"
                         v-if="authAcces"
                 >
                     <v-col
-                            class="col-lg-12 col-sm-12 col-md-12 v-bottom-navigation--fixed"
-                            style="position: relative!important; bottom: 0!important; top: 0!important;">
+                            class="col-lg-12 col-sm-12 col-md-12"
+                    >
                         <ValidationObserver v-slot="{ handleSubmit }">
                             <v-form
                                     @submit.prevent="handleSubmit(send)"
-                                    fixed
+                                    style="position: relative!important;
+                                    bottom: 0!important;
+                                    left: 0!important;
+                                    right: 0!important;
+                                    z-index: 10000;
+                                    margin: auto!important;"
                             >
                                 <ValidationProvider name="message"
                                                     rules="min:2|max:100000"
@@ -222,7 +231,8 @@
 </template>
 <script>
     import bcrypt from "bcryptjs";
-    import iniqid from 'uniqid'
+    import iniqid from 'uniqid';
+    import $ from 'jquery';
 
     export default {
         name: 'Chat',
@@ -244,7 +254,7 @@
                     id: '',
                     user: '',
                     content: '',
-                    myself: false
+                    createdAt: ''
                 },
                 online: 0,
                 onlineUsers: [],
@@ -268,8 +278,7 @@
             sendMessage(data) {
                 this.messages.push(data);
                 this.updateUserMessages();
-                let container = this.$el.querySelector("#chat-listing-container");
-                container.scrollTop = container.scrollHeight + 120;
+                $('#chat-listing-container').scrollTop($('#chat-listing-container')[0].scrollHeight);
             },
             updateOnlineUsers() {
                 this.online += 1;
@@ -313,6 +322,7 @@
         },
         mounted() {
             this.leaveChat();
+            this.scrollToTheLastMessage();
         },
         created() {
             this.login();
@@ -326,7 +336,10 @@
                     connectedAt: Date.now(),
                     token: bcrypt.hashSync(this.joinUserPassword, 12)
                 });
-                window.localStorage.setItem('_FSDV_USER_', JSON.stringify({info: this.user, _pass: this.joinUserPassword}));
+                window.localStorage.setItem('_FSDV_USER_', JSON.stringify({
+                    info: this.user,
+                    _pass: this.joinUserPassword
+                }));
                 this.authAcces = true;
                 this.showLoginForm = false;
                 this.snackbar = true;
@@ -385,12 +398,12 @@
                 this.message.id = iniqid();
                 this.message.content = this.newMessage;
                 this.message.user = this.user;
+                this.message.createdAt = Date.now();
                 this.$socket.emit('sendMessage', this.message);
                 this.message.myself = true;
                 this.messages.push(this.message);
                 this.clear();
-                let container = this.$el.querySelector("#chat-listing-container");
-                container.scrollTop = container.scrollHeight + 190;
+                this.scrollToTheLastMessage();
                 this.updateUserMessages();
             },
             //Update online user number
@@ -423,6 +436,9 @@
                     user: this.user,
                     type: 'vient de se deconnecter'
                 })
+            },
+            scrollToTheLastMessage() {
+                $('#chat-listing-container').scrollTop($('#chat-listing-container')[0].scrollHeight);
             }
         }
     };
@@ -447,6 +463,7 @@
         overflow: hidden;
         overflow-y: scroll;
         overflow-style: unset;
-        height: calc(100vh - 300px);
+        height: 450px;
+        padding-bottom: 203px !important;
     }
 </style>

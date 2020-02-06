@@ -179,8 +179,8 @@
                                     @submit.prevent="handleSubmit(send)"
                                     fixed
                             >
-                                <ValidationProvider name="messqge"
-                                                    rules="required|min:2|max:100000"
+                                <ValidationProvider name="message"
+                                                    rules="min:2|max:100000"
                                                     v-slot="{ errors }">
                                     <v-textarea
                                             @keyup.enter="send"
@@ -448,6 +448,5 @@
         overflow-y: scroll;
         overflow-style: unset;
         height: calc(100vh - 300px);
-
     }
 </style>

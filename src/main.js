@@ -22,8 +22,8 @@ Vue.use(
         // for development
         debug: false,
         // listen url 'https://faso-chat.herokuapp.com'
-        connection: 'http://localhost:4000',
-        //connection: 'https://faso-chat.herokuapp.com',
+        //connection: 'http://localhost:4000',
+        connection: 'https://faso-chat.herokuapp.com',
     })
 );
 

@@ -322,7 +322,7 @@
         },
         mounted() {
             this.leaveChat();
-            this.scrollToTheLastMessage();
+            setTimeout(this.scrollToTheLastMessage, 2000);
         },
         created() {
             this.login();
@@ -438,7 +438,11 @@
                 })
             },
             scrollToTheLastMessage() {
-                $('#chat-listing-container').scrollTop($('#chat-listing-container')[0].scrollHeight);
+                let container = this.$el.querySelector('#chat-listing-container');
+                if(container !== undefined && container !== null){
+                    $(container).scrollTop($(container)[0].scrollHeight);
+                }
+
             }
         }
     };
@@ -463,7 +467,7 @@
         overflow: hidden;
         overflow-y: scroll;
         overflow-style: unset;
-        height: 450px;
+        height: 460px;
         padding-bottom: 203px !important;
     }
 </style>

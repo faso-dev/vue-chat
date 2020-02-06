@@ -448,5 +448,6 @@
         overflow-y: scroll;
         overflow-style: unset;
         height: calc(100vh - 300px);
+
     }
 </style>

@@ -27,9 +27,10 @@
                             >
                                 <v-badge
                                         :dot="true"
-                                        color="red"
+                                        :color="userOnline"
                                 >
                                     {{ u.username }}
+                                    <span v-if="!!new Date(u.connectedAt)" class="posted-at"> {{ new Date(u.connectedAt) | moment("from", "now") }}</span>
                                 </v-badge>
                             </v-tab>
                         </v-tabs>
@@ -178,7 +179,8 @@
                                                 {{ m.content }}
                                             </v-card-text>
                                             <v-card-actions>
-                                                {{ new Date(m.createdAt) | moment("from", "now") }}
+                                                <span v-if="!!new Date(m.createdAt)" class="posted-at"> {{ new Date(m.createdAt) | moment("from", "now") }}</span>
+                                                <span v-else class="posted-at"> many day ago </span>
                                             </v-card-actions>
                                         </v-card>
                                     </v-col>
@@ -254,7 +256,7 @@
         name: 'Chat',
         data() {
             return {
-                boilerplate: false,
+                userOnline: '#008000',
                 tile: false,
                 type: 'list-item-avatar-three-line',
                 user: {
@@ -383,6 +385,7 @@
                         this.showLoginForm = false;
                         this.snackbar = true;
                         this.user = Object.assign({}, user.info);
+                        this.user.connectedAt = Date.now();
                         let sessionToken = window.localStorage.getItem('_FSDV_SESSION_') || null;
                         this.onlineUsers.unshift(this.user);
                         this.loadUserMessages();
@@ -481,7 +484,12 @@
     .mt-50 {
         margin-top: 30px !important;
     }
-
+    .posted-at{
+        color: #ff0000;
+    }
+    .user-online{
+        color: #008000;
+    }
     .chat-scroll-view {
         overflow: hidden;
         overflow-y: scroll;

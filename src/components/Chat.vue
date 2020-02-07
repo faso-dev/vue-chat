@@ -28,9 +28,10 @@
                                 <v-badge
                                         :dot="true"
                                         :color="userOnline"
+                                        style="letter-spacing: 1px"
                                 >
                                     {{ u.username }}
-                                    <span v-if="!!new Date(u.connectedAt)" class="posted-at"> {{ new Date(u.connectedAt) | moment("from", "now") }}</span>
+                                    <span v-if="!!new Date(u.connectedAt)" class="posted-at font-weight-light font-size-10 " style="text-transform: lowercase; letter-spacing: 0"> {{ new Date(u.connectedAt) | moment("from", "now") | lower }}</span>
                                 </v-badge>
                             </v-tab>
                         </v-tabs>
@@ -348,6 +349,12 @@
         created() {
             this.login();
         },
+        filters: {
+            lower:  value => {
+                if (!value) return '';
+                return value.toString().toLowerCase()
+            }
+        },
         methods: {
             //When user register
             register() {
@@ -489,6 +496,9 @@
     }
     .user-online{
         color: #008000;
+    }
+    .font-size-10{
+        font-size: 10px!important;
     }
     .chat-scroll-view {
         overflow: hidden;

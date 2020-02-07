@@ -341,7 +341,7 @@
         },
         mounted() {
             this.leaveChat();
-            setTimeout(this.scrollToTheLastMessage, 2000);
+            setTimeout(this.scrollToTheLastMessage, 5000);
         },
         created() {
             this.login();
@@ -485,7 +485,6 @@
     .chat-scroll-view {
         overflow: hidden;
         overflow-y: scroll;
-        overflow-style: unset;
         height: 460px;
         padding-bottom: 203px !important;
     }

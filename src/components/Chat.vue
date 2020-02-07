@@ -23,6 +23,7 @@
                                     v-for="u in onlineUsers"
                                     :key="u.id"
                                     :href="'#tab-' + u.id"
+                                    @click="taguser(u)"
 
                             >
                                 <v-badge
@@ -176,9 +177,7 @@
                                                     </v-list-item-content>
                                                 </v-list-item>
                                             </v-card-actions>
-                                            <v-card-text>
-                                                {{ m.content }}
-                                            </v-card-text>
+                                            <v-card-text v-html=" m.content "/>
                                             <v-card-actions>
                                                 <span v-if="!!new Date(m.createdAt)" class="posted-at font-weight-light font-size-10 letter-sapcing-0"> {{ new Date(m.createdAt) | moment("from", "now") }}</span>
                                                 <span v-else class="posted-at font-weight-light font-size-10 letter-sapcing-0"> many day ago </span>
@@ -212,7 +211,7 @@
                                                     v-slot="{ errors }">
                                     <v-textarea
                                             @keyup.enter="handleSubmit(send)"
-                                            v-model="newMessage"
+                                            v-model.trim="newMessage"
                                             placeholder="Tapez votre message maintenant"
                                             class="col-lg-12 col-sm-12 col-md-12"
                                             required
@@ -472,7 +471,12 @@
                     $(container).scrollTop($(container)[0].scrollHeight);
                 }
 
-            }
+            },
+            taguser(u){
+                if (u.id !== this.user.id){
+                    this.newMessage = this.newMessage.concat(`<strong style="color: blueviolet!important;">@${u.username}</strong>`);
+                }
+            },
         }
     };
 </script>

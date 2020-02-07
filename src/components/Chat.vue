@@ -168,8 +168,8 @@
                                                         />
                                                     </v-list-item-avatar>
                                                     <v-list-item-content>
-                                                        <v-list-item-title>{{ m.user.id !== user.id ? m.user.username :
-                                                                           'Moi' }}
+                                                        <v-list-item-title>
+                                                            {{ m.user.id !== user.id ? m.user.username : 'Moi' }}
                                                         </v-list-item-title>
                                                     </v-list-item-content>
                                                 </v-list-item>
@@ -297,7 +297,7 @@
             sendMessage(data) {
                 this.messages.push(data);
                 this.updateUserMessages();
-                $('#chat-listing-container').scrollTop($('#chat-listing-container')[0].scrollHeight);
+                this.scrollToTheLastMessage();
             },
             updateOnlineUsers() {
                 this.online += 1;

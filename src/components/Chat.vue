@@ -113,10 +113,26 @@
                         </template>
                     </v-col>
                 </v-row>
-                <v-row v-if="authAcces">
+                <v-row v-if="!showLoginForm">
                     <v-col
+                            v-if="!authAcces"
+                            class="col-lg-12 col-sm-12 col-md-12 mt-50">
+
+                        <v-skeleton-loader
+                                v-for="i in 10"
+                                :key="i"
+
+                                :type="type"
+                                :tile="tile"
+                                class="mx-auto"
+                        />
+                    </v-col>
+
+                    <v-col
+                            v-if="authAcces"
                             cols="12"
                             class="col-lg-12 col-sm-12 col-md-12 mt-50">
+
                         <v-card
 
                                 elevation="0"
@@ -238,6 +254,9 @@
         name: 'Chat',
         data() {
             return {
+                boilerplate: false,
+                tile: false,
+                type: 'list-item-avatar-three-line',
                 user: {
                     id: '',
                     username: '',

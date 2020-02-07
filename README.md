@@ -1,23 +1,27 @@
 # vuechat
 
+## Instalation
+```
+git clone https://github.com/faso-dev/vue-chat.git
+```
 ## Project setup
 ```
-yarn install
+cd vue-chat && npm install
 ```
 
 ### Compiles and hot-reloads for development
 ```
-yarn serve
+npm serve
 ```
 
 ### Compiles and minifies for production
 ```
-yarn build
+npm build
 ```
 
 ### Lints and fixes files
 ```
-yarn lint
+npm lint
 ```
 
 ### Customize configuration

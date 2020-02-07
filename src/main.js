@@ -22,7 +22,7 @@ Vue.use(
     new VSocket({
         // for development
         debug: false,
-        //connection: 'http://192.168.43.159:4000',
+        connection: 'http://localhost:4000',
     })
 );
 

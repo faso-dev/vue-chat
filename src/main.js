@@ -22,9 +22,7 @@ Vue.use(
     new VSocket({
         // for development
         debug: false,
-        // listen url 'https://faso-chat.herokuapp.com'
         //connection: 'http://192.168.43.159:4000',
-        connection: 'https://faso-chat.herokuapp.com',
     })
 );
 

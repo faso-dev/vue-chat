@@ -180,8 +180,8 @@
                                                 {{ m.content }}
                                             </v-card-text>
                                             <v-card-actions>
-                                                <span v-if="!!new Date(m.createdAt)" class="posted-at"> {{ new Date(m.createdAt) | moment("from", "now") }}</span>
-                                                <span v-else class="posted-at"> many day ago </span>
+                                                <span v-if="!!new Date(m.createdAt)" class="posted-at font-weight-light font-size-10 letter-sapcing-0"> {{ new Date(m.createdAt) | moment("from", "now") }}</span>
+                                                <span v-else class="posted-at font-weight-light font-size-10 letter-sapcing-0"> many day ago </span>
                                             </v-card-actions>
                                         </v-card>
                                     </v-col>
@@ -493,6 +493,9 @@
     }
     .posted-at{
         color: #ff0000;
+    }
+    .letter-sapcing-0{
+        letter-spacing: 0;
     }
     .user-online{
         color: #008000;

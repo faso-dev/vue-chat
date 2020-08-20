@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "aws-sdk": "^2.612.0",
-    "bcrypt": "^3.0.8",
+    "bcrypt": "^5.0.0",
     "bcryptjs": "^2.4.3",
     "core-js": "^3.4.4",
     "express": "^4.17.1",

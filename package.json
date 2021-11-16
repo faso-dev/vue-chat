@@ -9,7 +9,7 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "aws-sdk": "^2.612.0",
+    "aws-sdk": "^2.814.0",
     "bcrypt": "^5.0.0",
     "bcryptjs": "^2.4.3",
     "core-js": "^3.4.4",
